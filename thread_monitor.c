@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 21:14:34 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 20:18:52 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 21:09:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ int	all_meals_eaten_check(t_philo *philo)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&philo->rules->meal_eaten_lock);
 	while (i < philo->rules->philo_count
 		&& philo[i].meals_eaten >= philo->rules->must_eat_count)
 		i++;
+	pthread_mutex_unlock(&philo->rules->meal_eaten_lock);
 	if (i == philo->rules->philo_count)
 	{
 		pthread_mutex_lock(&philo->rules->print_lock);
@@ -61,6 +63,7 @@ void	*thread_monitor(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
+		usleep(1000);
 		if (check_for_death(philo) == 1)
 			return (NULL);
 		i = 0;
@@ -74,7 +77,6 @@ void	*thread_monitor(void *arg)
 			else
 				i++;
 		}
-		usleep(1000);
 	}
 	return (NULL);
 }

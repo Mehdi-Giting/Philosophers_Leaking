@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:53:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 20:20:20 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 21:11:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	sub_routine_eating(t_philo *philo)
 	pthread_mutex_lock(&philo->rules->print_lock);
 	printf("%lo Philosopher %i is eating\n", time, philo->id);
 	pthread_mutex_unlock(&philo->rules->print_lock);
+	pthread_mutex_lock(&philo->rules->meal_eaten_lock);
 	philo->meals_eaten = philo->meals_eaten + 1;
+	pthread_mutex_unlock(&philo->rules->meal_eaten_lock);
 	usleep(philo->rules->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);

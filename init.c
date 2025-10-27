@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 02:43:16 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 19:54:56 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 20:53:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_rules	*init_rules(char **argv)
 	pthread_mutex_init(&rules->print_lock, NULL);
 	pthread_mutex_init(&rules->meal_lock, NULL);
 	pthread_mutex_init(&rules->sim_lock, NULL);
+	pthread_mutex_init(&rules->meal_eaten_lock, NULL);
 	return (rules);
 }
 

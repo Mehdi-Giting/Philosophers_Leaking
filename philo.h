@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:37:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 20:19:23 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 20:53:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_rules
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		print_lock;
 	pthread_mutex_t		meal_lock;
+	pthread_mutex_t		meal_eaten_lock;
 	pthread_mutex_t		sim_lock;
 	int					stop_sim;
 }	t_rules;

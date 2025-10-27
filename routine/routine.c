@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 15:39:39 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 20:14:14 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 21:08:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	*routine(void *arg)
 		usleep(1000);
 	while (1)
 	{
-		if (check_for_death(philo) == 1)
-			return (NULL);
 		sub_routine_eating(philo);
 		if (check_for_death(philo) == 1)
 			return (NULL);
@@ -42,6 +40,8 @@ void	*routine(void *arg)
 		if (check_for_death(philo) == 1)
 			return (NULL);
 		sub_routine_thinking(philo);
+		if (check_for_death(philo) == 1)
+			return (NULL);
 	}
 	return (NULL);
 }
