@@ -6,11 +6,35 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 03:17:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/26 20:50:11 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 18:07:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	thread_creation(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->rules->philo_count)
+	{
+		pthread_create(&philo[i].thread, NULL, routine, &philo[i]);
+		i++;
+	}
+}
+
+void	thread_join(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->rules->philo_count)
+	{
+		pthread_join(philo[i].thread, NULL);
+		i++;
+	}
+}
 
 int	is_space(int c)
 {

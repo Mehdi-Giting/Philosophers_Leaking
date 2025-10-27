@@ -3,7 +3,12 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -pthread
 RM			= rm -f
 
-SRC			= main.c check_valid_input.c utils.c init.c thread_manager.c routine.c cleanup.c
+SRC			= main.c check_valid_input.c utils.c init.c thread_monitor.c cleanup.c \
+			  routine/routine.c \
+			  routine/thinking.c \
+			  routine/sleeping.c \
+			  routine/eating.c
+
 OBJ			= $(SRC:.c=.o)
 
 all: $(NAME)

@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_manager.c                                   :+:      :+:    :+:   */
+/*   thread_monitor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 21:14:34 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/26 23:44:14 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 18:55:22 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	thread_creation(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->rules->philo_count)
-	{
-		pthread_create(&philo[i].thread, NULL, routine, &philo[i]);
-		i++;
-	}
-}
-
-void	thread_join(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->rules->philo_count)
-	{
-		pthread_join(philo[i].thread, NULL);
-		i++;
-	}
-}
 
 int	death_check(t_philo *philo)
 {

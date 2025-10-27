@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:37:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/26 18:24:30 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 17:54:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	thread_creation(t_philo *philo);
 void	thread_join(t_philo *philo);
 void	*thread_monitor(void *arg);
 long	get_time_in_ms(void);
+void	sub_routine_thinking(t_philo *philo);
+void	sub_routine_eating(t_philo *philo);
 void	cleanup_all(t_philo *philo, t_rules *rules);
+void	sub_routine_sleeping(t_philo *philo);
 
 #endif
