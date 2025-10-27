@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:37:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 17:54:44 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 20:19:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_rules
 	long				start_time;
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		print_lock;
+	pthread_mutex_t		meal_lock;
+	pthread_mutex_t		sim_lock;
 	int					stop_sim;
 }	t_rules;
 
@@ -58,5 +60,6 @@ void	sub_routine_thinking(t_philo *philo);
 void	sub_routine_eating(t_philo *philo);
 void	cleanup_all(t_philo *philo, t_rules *rules);
 void	sub_routine_sleeping(t_philo *philo);
+int		check_for_death(t_philo *philo);
 
 #endif

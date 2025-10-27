@@ -1,6 +1,6 @@
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -pthread
+CFLAGS		= -Wall -Wextra -Werror -pthread -g -O0
 RM			= rm -f
 
 SRC			= main.c check_valid_input.c utils.c init.c thread_monitor.c cleanup.c \

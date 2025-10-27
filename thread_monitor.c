@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 21:14:34 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 18:55:22 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/27 20:18:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 int	death_check(t_philo *philo)
 {
 	long	time;
+	long	last_meal;
 
 	time = get_time_in_ms() - philo->rules->start_time;
-	if ((get_time_in_ms() - philo->last_meal_time) > philo->rules->time_to_die)
+	pthread_mutex_lock(&philo->rules->meal_lock);
+	last_meal = philo->last_meal_time;
+	pthread_mutex_unlock(&philo->rules->meal_lock);
+	if ((get_time_in_ms() - last_meal) > philo->rules->time_to_die)
 	{
 		pthread_mutex_lock(&philo->rules->print_lock);
 		printf("%ld Philosopher %i has died.\n", time, philo->id);
 		pthread_mutex_unlock(&philo->rules->print_lock);
+		pthread_mutex_lock(&philo->rules->sim_lock);
 		philo->rules->stop_sim = 1;
+		pthread_mutex_unlock(&philo->rules->sim_lock);
 		return (0);
 	}
 	return (1);
@@ -53,8 +59,10 @@ void	*thread_monitor(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (philo->rules->stop_sim == 0)
+	while (1)
 	{
+		if (check_for_death(philo) == 1)
+			return (NULL);
 		i = 0;
 		while (i < philo->rules->philo_count)
 		{
