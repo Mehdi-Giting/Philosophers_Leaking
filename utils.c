@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 03:17:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 18:07:33 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 05:46:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_atol(const char *str)
 	return (res * sign);
 }
 
-long	get_time_in_ms(void)
+long long	get_time_in_ms(void)
 {
 	struct timeval	tv;
 	long			res;

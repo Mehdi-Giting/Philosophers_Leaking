@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 02:43:16 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 20:53:49 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 06:15:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	init_rules_belly(t_rules *rules, char **argv)
 		rules->must_eat_count = ft_atol(argv[5]);
 	else
 		rules->must_eat_count = -1;
-	rules->start_time = get_time_in_ms();
 }
 
 t_rules	*init_rules(char **argv)
@@ -54,6 +53,7 @@ t_rules	*init_rules(char **argv)
 	pthread_mutex_init(&rules->meal_lock, NULL);
 	pthread_mutex_init(&rules->sim_lock, NULL);
 	pthread_mutex_init(&rules->meal_eaten_lock, NULL);
+	pthread_mutex_init(&rules->start_lock, NULL);
 	return (rules);
 }
 
@@ -73,7 +73,6 @@ t_philo	*init_philo(t_rules *rules)
 		philo[i].right_fork = &rules->fork[(i + 1) % rules->philo_count];
 		philo[i].rules = rules;
 		philo[i].meals_eaten = 0;
-		philo[i].last_meal_time = rules->start_time;
 		i++;
 	}
 	return (philo);

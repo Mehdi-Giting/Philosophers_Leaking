@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:03:06 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/26 20:45:46 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 05:47:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	one_philo(t_rules *rules)
 {
-	printf("%ld 1 has taken a fork\n", get_time_in_ms() - rules->start_time);
+	printf("%llo 1 has taken a fork\n", get_time_in_ms() - rules->start_time);
 	usleep(rules->time_to_die * 1000);
-	printf("%ld 1 has died\n", get_time_in_ms() - rules->start_time);
+	printf("%llo 1 has died\n", get_time_in_ms() - rules->start_time);
 	cleanup_all(NULL, rules);
 }
 

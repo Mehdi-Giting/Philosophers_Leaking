@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 18:07:28 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/27 20:54:19 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 04:01:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	cleanup_all(t_philo *philo, t_rules *rules)
 	pthread_mutex_destroy(&rules->meal_lock);
 	pthread_mutex_destroy(&rules->sim_lock);
 	pthread_mutex_destroy(&rules->meal_eaten_lock);
+	pthread_mutex_destroy(&rules->start_lock);
 	free(philo);
 	free(rules);
 }
