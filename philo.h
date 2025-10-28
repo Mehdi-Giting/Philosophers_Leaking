@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:37:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 17:05:08 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 18:25:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void		sub_routine_eating(t_philo *philo);
 void		cleanup_all(t_philo *philo, t_rules *rules);
 void		sub_routine_sleeping(t_philo *philo);
 int			check_for_death(t_philo *philo);
+long long	get_time(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 03:17:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 17:04:52 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 18:23:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,14 @@ long long	get_time_in_ms(void)
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+long long	get_time(t_philo *philo)
+{
+	long long	time;
+
+	pthread_mutex_lock(&philo->rules->start_lock);
+	time = get_time_in_ms() - philo->rules->start_time;
+	pthread_mutex_unlock(&philo->rules->start_lock);
+	return (time);
 }

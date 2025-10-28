@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:51:09 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 17:14:42 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 19:24:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	sub_routine_thinking(t_philo *philo)
 {
 	long long	time;
 
-	pthread_mutex_lock(&philo->rules->start_lock);
-	time = get_time_in_ms() - philo->rules->start_time;
-	pthread_mutex_unlock(&philo->rules->start_lock);
+	time = get_time(philo);
 	pthread_mutex_lock(&philo->rules->print_lock);
 	printf("%lld %i is thinking\n", time, philo->id);
 	pthread_mutex_unlock(&philo->rules->print_lock);
