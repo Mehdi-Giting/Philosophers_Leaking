@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 21:14:34 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 06:18:24 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 17:17:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	death_check(t_philo *philo)
 	if ((get_time_in_ms() - last_meal) > philo->rules->time_to_die)
 	{
 		pthread_mutex_lock(&philo->rules->print_lock);
-		printf("%llo %i has died.\n", time, philo->id);
+		printf("%lld %i has died.\n", time, philo->id);
+		printf("%lld %lld.\n", philo->rules->time_to_die, (get_time_in_ms() - last_meal));
 		pthread_mutex_unlock(&philo->rules->print_lock);
 		pthread_mutex_lock(&philo->rules->sim_lock);
 		philo->rules->stop_sim = 1;

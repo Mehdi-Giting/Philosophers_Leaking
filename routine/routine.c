@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 15:39:39 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 06:19:36 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 17:22:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*routine(void *arg)
 	philo->last_meal_time = philo->rules->start_time;
 	pthread_mutex_unlock(&philo->rules->meal_lock);
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(100);
 	while (1)
 	{
 		sub_routine_eating(philo);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:37:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 05:49:03 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 17:05:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 
 typedef struct s_rules
 {
-	int					philo_count;
-	int					time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
-	int					must_eat_count;
+	long long			philo_count;
+	long long			time_to_die;
+	long long			time_to_eat;
+	long long			time_to_sleep;
+	long long			must_eat_count;
 	long long			start_time;
 	pthread_mutex_t		start_lock;
 	pthread_mutex_t		*fork;
@@ -50,7 +50,7 @@ typedef struct s_philo
 
 int			is_valid_input(int argc, char *argv[]);
 int			is_space(int c);
-int			ft_atol(const char *str);
+long long	ft_atol(const char *str);
 t_rules		*init_rules(char **argv);
 t_philo		*init_philo(t_rules *rules);
 void		*routine(void *arg);

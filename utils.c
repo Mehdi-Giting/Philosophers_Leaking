@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 03:17:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 05:46:35 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/28 17:04:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	is_space(int c)
 	return (0);
 }
 
-int	ft_atol(const char *str)
+long long	ft_atol(const char *str)
 {
-	int			i;
+	long long	i;
 	long long	sign;
 	long long	res;
 
@@ -71,9 +71,7 @@ int	ft_atol(const char *str)
 long long	get_time_in_ms(void)
 {
 	struct timeval	tv;
-	long			res;
 
 	gettimeofday(&tv, NULL);
-	res = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	return (res);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
