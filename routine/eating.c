@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:53:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 19:19:35 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:28:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	fork_lock_order(t_philo *philo)
 {
-	// long long	time;
-
-	// time = get_time(philo);
 	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_lock(philo->right_fork);
@@ -27,10 +24,6 @@ void	fork_lock_order(t_philo *philo)
 		pthread_mutex_lock(philo->left_fork);
 		pthread_mutex_lock(philo->right_fork);	
 	}
-	// pthread_mutex_lock(&philo->rules->print_lock);
-	// printf("%lld %i has taken a fork.\n", time, philo->id);
-	// printf("%lld %i has taken a fork.\n", time, philo->id);
-	// pthread_mutex_unlock(&philo->rules->print_lock);
 }
 
 void	fork_unlock_order(t_philo *philo)
@@ -50,19 +43,15 @@ void	fork_unlock_order(t_philo *philo)
 void	sub_routine_eating(t_philo *philo)
 {
 	long long	time;
-	// long long	last_meal;
+	//long long	last_meal;
 
 	fork_lock_order(philo);
 	
 	time = get_time(philo);
-	
-	pthread_mutex_lock(&philo->rules->meal_lock);
-	philo->last_meal_time = get_time_in_ms();
-	// last_meal = philo->last_meal_time;
-	pthread_mutex_unlock(&philo->rules->meal_lock);
 
 	pthread_mutex_lock(&philo->rules->print_lock);
-	// printf("%lld\n", last_meal);
+	printf("%lld %i has taken a fork.\n", time, philo->id);
+	printf("%lld %i has taken a fork.\n", time, philo->id);
 	printf("%lld %i is eating\n", time, philo->id);
 	pthread_mutex_unlock(&philo->rules->print_lock);
 	
@@ -73,4 +62,9 @@ void	sub_routine_eating(t_philo *philo)
 	usleep(philo->rules->time_to_eat * 1000);
 	
 	fork_unlock_order(philo);
+
+	pthread_mutex_lock(&philo->rules->meal_lock);
+	philo->last_meal_time = get_time_in_ms();
+	//last_meal = philo->last_meal_time;
+	pthread_mutex_unlock(&philo->rules->meal_lock);
 }

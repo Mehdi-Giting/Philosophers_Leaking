@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 15:39:39 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 19:35:22 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:38:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ void	*routine(void *arg)
 	pthread_mutex_unlock(&philo->rules->start_lock);
 	pthread_mutex_unlock(&philo->rules->meal_lock);
 	if (philo->id % 2 == 0)
-		usleep(50);
+		usleep(42);
 	while (1)
 	{
+		if (check_for_death(philo) == 1)
+			return (NULL);
 		sub_routine_eating(philo);
 		if (check_for_death(philo) == 1)
 			return (NULL);

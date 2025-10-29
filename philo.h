@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:37:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 18:25:15 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/29 13:59:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <time.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 typedef struct s_rules
 {
@@ -28,6 +29,7 @@ typedef struct s_rules
 	long long			time_to_sleep;
 	long long			must_eat_count;
 	long long			start_time;
+	pthread_mutex_t		start_sim_lock;
 	pthread_mutex_t		start_lock;
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		print_lock;

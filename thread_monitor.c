@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 21:14:34 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 19:29:37 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/29 14:41:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	death_check(t_philo *philo)
 	if ((get_time_in_ms() - last_meal) > philo->rules->time_to_die)
 	{
 		pthread_mutex_lock(&philo->rules->print_lock);
+		// pthread_mutex_lock(&philo->rules->start_lock);
+		// printf("%lld %lld %lld.\n", philo->rules->start_time, get_time_in_ms(), get_time_in_ms() - philo->rules->start_time);
+		// pthread_mutex_unlock(&philo->rules->start_lock);
+		printf("%lld\n", (get_time_in_ms() - last_meal));
 		printf("%lld %i has died.\n", time, philo->id);
 		pthread_mutex_unlock(&philo->rules->print_lock);
 		pthread_mutex_lock(&philo->rules->sim_lock);
@@ -49,7 +53,9 @@ int	all_meals_eaten_check(t_philo *philo)
 		pthread_mutex_lock(&philo->rules->print_lock);
 		printf("All meals have been eaten.\n");
 		pthread_mutex_unlock(&philo->rules->print_lock);
+		pthread_mutex_lock(&philo->rules->sim_lock);
 		philo->rules->stop_sim = 1;
+		pthread_mutex_unlock(&philo->rules->sim_lock);
 		return (0);
 	}
 	return (1);
@@ -63,7 +69,7 @@ void	*thread_monitor(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		usleep(200);
+		usleep(50);
 		if (check_for_death(philo) == 1)
 			return (NULL);
 		i = 0;
