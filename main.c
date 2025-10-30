@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:03:06 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/28 17:14:25 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 07:45:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char *argv[])
 {
 	t_rules		*rules;
 	t_philo		*philo;
-	pthread_t	monitor;
 
 	if (is_valid_input(argc, argv) == 0)
 	{
@@ -42,8 +41,6 @@ int	main(int argc, char *argv[])
 	rules->stop_sim = 0;
 	philo = init_philo(rules);
 	thread_creation(philo);
-	pthread_create(&monitor, NULL, thread_monitor, philo);
-	pthread_join(monitor, NULL);
 	thread_join(philo);
 	cleanup_all(philo, rules);
 	return (0);

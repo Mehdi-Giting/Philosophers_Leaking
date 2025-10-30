@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 03:17:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/29 13:59:09 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 09:30:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ void	thread_creation(t_philo *philo)
 		pthread_create(&philo[i].thread, NULL, routine, &philo[i]);
 		i++;
 	}
+	// pthread_mutex_lock(&philo->rules->start_sim_lock);
+	// philo->rules->start_sim = true;
+	// pthread_mutex_lock(&philo->rules->start_sim_lock);
+	pthread_create(&philo[i - 1].rules->monitor, NULL, thread_monitor, philo);
 }
 
 void	thread_join(t_philo *philo)
@@ -34,6 +38,7 @@ void	thread_join(t_philo *philo)
 		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
+	pthread_join(philo[i - 1].rules->monitor, NULL);
 }
 
 int	is_space(int c)

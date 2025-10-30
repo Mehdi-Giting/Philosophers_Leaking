@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 15:39:39 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/29 14:38:32 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 09:30:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,23 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+
+	// pthread_mutex_lock(&philo->rules->start_sim_lock);
+	// while (!philo->rules->start_sim)
+	// {
+	// 	pthread_mutex_unlock(&philo->rules->start_sim_lock);
+	// 	pthread_mutex_lock(&philo->rules->start_sim_lock);
+	// }
+	
 	pthread_mutex_lock(&philo->rules->meal_lock);
 	pthread_mutex_lock(&philo->rules->start_lock);
 	philo->rules->start_time = get_time_in_ms();
 	philo->last_meal_time = philo->rules->start_time;
+	
+	// pthread_mutex_lock(&philo->rules->print_lock);
+	// printf("%lld\n", (philo->rules->start_time));
+	// pthread_mutex_unlock(&philo->rules->print_lock);
+	
 	pthread_mutex_unlock(&philo->rules->start_lock);
 	pthread_mutex_unlock(&philo->rules->meal_lock);
 	if (philo->id % 2 == 0)

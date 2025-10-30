@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 17:53:50 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/29 14:28:05 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/29 16:29:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	fork_unlock_order(t_philo *philo)
 void	sub_routine_eating(t_philo *philo)
 {
 	long long	time;
-	//long long	last_meal;
 
 	fork_lock_order(philo);
 	
@@ -65,6 +64,5 @@ void	sub_routine_eating(t_philo *philo)
 
 	pthread_mutex_lock(&philo->rules->meal_lock);
 	philo->last_meal_time = get_time_in_ms();
-	//last_meal = philo->last_meal_time;
 	pthread_mutex_unlock(&philo->rules->meal_lock);
 }

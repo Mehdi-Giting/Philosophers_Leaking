@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 21:14:34 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/29 14:41:15 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 09:13:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,19 @@ int	death_check(t_philo *philo)
 	time = get_time(philo);
 	pthread_mutex_lock(&philo->rules->meal_lock);
 	last_meal = philo->last_meal_time;
-	pthread_mutex_unlock(&philo->rules->meal_lock);
 	if ((get_time_in_ms() - last_meal) > philo->rules->time_to_die)
 	{
 		pthread_mutex_lock(&philo->rules->print_lock);
-		// pthread_mutex_lock(&philo->rules->start_lock);
-		// printf("%lld %lld %lld.\n", philo->rules->start_time, get_time_in_ms(), get_time_in_ms() - philo->rules->start_time);
-		// pthread_mutex_unlock(&philo->rules->start_lock);
-		printf("%lld\n", (get_time_in_ms() - last_meal));
-		printf("%lld %i has died.\n", time, philo->id);
+		// printf("%lld\n", (get_time_in_ms() - last_meal));
+		printf("\n%lld %i has died.\n\n", time, philo->id);
 		pthread_mutex_unlock(&philo->rules->print_lock);
 		pthread_mutex_lock(&philo->rules->sim_lock);
 		philo->rules->stop_sim = 1;
 		pthread_mutex_unlock(&philo->rules->sim_lock);
+		pthread_mutex_unlock(&philo->rules->meal_lock);
 		return (0);
 	}
+	pthread_mutex_unlock(&philo->rules->meal_lock);
 	return (1);
 }
 
@@ -69,7 +67,7 @@ void	*thread_monitor(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		usleep(50);
+		usleep(42);
 		if (check_for_death(philo) == 1)
 			return (NULL);
 		i = 0;

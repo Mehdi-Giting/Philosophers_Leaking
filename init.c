@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 02:43:16 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/29 13:59:38 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 09:24:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init_rules_belly(t_rules *rules, char **argv)
 		rules->must_eat_count = ft_atol(argv[5]);
 	else
 		rules->must_eat_count = -1;
+	rules->start_sim = false;
 }
 
 t_rules	*init_rules(char **argv)
@@ -74,6 +75,7 @@ t_philo	*init_philo(t_rules *rules)
 		philo[i].right_fork = &rules->fork[(i + 1) % rules->philo_count];
 		philo[i].rules = rules;
 		philo[i].meals_eaten = 0;
+		philo[i].last_meal_time = get_time_in_ms();
 		i++;
 	}
 	return (philo);
