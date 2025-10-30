@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 12:16:18 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/30 17:18:45 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 21:40:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ static bool	check_death(t_rules *rules)
 		{
 			set_stop(rules, true);
 			pthread_mutex_lock(&rules->print_mutex);
-			printf("%ld %ld\n", now_ms() - rules->philos[i].last_meal_ms,
-				rules->time_to_die + 5);
+			printf("%ld\n", now_ms() - rules->philos[i].last_meal_ms);
 			pthread_mutex_unlock(&rules->philos[i].meal_mutex);
 			printf("%ld %d died\n",
 				now_ms() - rules->start_time_ms, rules->philos[i].id);
