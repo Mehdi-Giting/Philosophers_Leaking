@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 03:17:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/30 09:30:21 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 09:36:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	thread_creation(t_philo *philo)
 	}
 	// pthread_mutex_lock(&philo->rules->start_sim_lock);
 	// philo->rules->start_sim = true;
-	// pthread_mutex_lock(&philo->rules->start_sim_lock);
+	// pthread_mutex_unlock(&philo->rules->start_sim_lock);
 	pthread_create(&philo[i - 1].rules->monitor, NULL, thread_monitor, philo);
 }
 
