@@ -45,7 +45,6 @@ static bool	check_death(t_rules *rules)
 		{
 			set_stop(rules, true);
 			pthread_mutex_lock(&rules->print_mutex);
-			printf("%ld\n", now_ms() - rules->philos[i].last_meal_ms);
 			pthread_mutex_unlock(&rules->philos[i].meal_mutex);
 			printf("%ld %d died\n",
 				now_ms() - rules->start_time_ms, rules->philos[i].id);
