@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 02:43:16 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/30 09:24:17 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 17:25:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,63 +20,53 @@
    argv[5] == number_of_times_each_philosopher_must_eat
 */
 
-void	init_rules_belly(t_rules *rules, char **argv)
+static int	init_mutexes(t_rules *rules)
 {
-	rules->philo_count = ft_atol(argv[1]);
-	rules->time_to_die = ft_atol(argv[2]);
-	rules->time_to_eat = ft_atol(argv[3]);
-	rules->time_to_sleep = ft_atol(argv[4]);
-	if (argv[5])
-		rules->must_eat_count = ft_atol(argv[5]);
-	else
-		rules->must_eat_count = -1;
-	rules->start_sim = false;
-}
+	int	i;
 
-t_rules	*init_rules(char **argv)
-{
-	int		i;
-	t_rules	*rules;
-
-	rules = malloc(sizeof(t_rules));
-	if (!rules)
-		return (NULL);
-	init_rules_belly(rules, argv);
-	rules->fork = malloc(sizeof(pthread_mutex_t) * rules->philo_count);
-	if (!rules->fork)
-		return (NULL);
-	while (i < rules->philo_count)
-	{
-		pthread_mutex_init(&rules->fork[i], NULL);
-		i++;
-	}
-	pthread_mutex_init(&rules->print_lock, NULL);
-	pthread_mutex_init(&rules->meal_lock, NULL);
-	pthread_mutex_init(&rules->sim_lock, NULL);
-	pthread_mutex_init(&rules->meal_eaten_lock, NULL);
-	pthread_mutex_init(&rules->start_lock, NULL);
-	pthread_mutex_init(&rules->start_sim_lock, NULL);
-	return (rules);
-}
-
-t_philo	*init_philo(t_rules *rules)
-{
-	int		i;
-	t_philo	*philo;
-
-	philo = malloc(sizeof(t_philo) * rules->philo_count);
-	if (!philo)
-		return (NULL);
+	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->nb_philo);
+	if (!rules->forks)
+		return (1);
 	i = 0;
-	while (i < rules->philo_count)
+	while (i < rules->nb_philo)
 	{
-		philo[i].id = i + 1;
-		philo[i].left_fork = &rules->fork[i];
-		philo[i].right_fork = &rules->fork[(i + 1) % rules->philo_count];
-		philo[i].rules = rules;
-		philo[i].meals_eaten = 0;
-		philo[i].last_meal_time = get_time_in_ms();
+		if (pthread_mutex_init(&rules->forks[i], NULL))
+			return (1);
 		i++;
 	}
-	return (philo);
+	if (pthread_mutex_init(&rules->print_mutex, NULL))
+		return (1);
+	if (pthread_mutex_init(&rules->stop_mutex, NULL))
+		return (1);
+	return (0);
+}
+
+int	rules_init(t_rules *rules)
+{
+	rules->stop = false;
+	if (init_mutexes(rules))
+		return (1);
+	rules->philos = malloc(sizeof(t_philo) * rules->nb_philo);
+	if (!rules->philos)
+		return (1);
+	return (0);
+}
+
+int	philos_init(t_rules *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->nb_philo)
+	{
+		rules->philos[i].id = i + 1;
+		rules->philos[i].left_fork = i;
+		rules->philos[i].right_fork = (i + 1) % rules->nb_philo;
+		rules->philos[i].last_meal_ms = 0;
+		rules->philos[i].meals_eaten = 0;
+		rules->philos[i].rules = rules;
+		pthread_mutex_init(&rules->philos[i].meal_mutex, NULL);
+		i++;
+	}
+	return (0);
 }

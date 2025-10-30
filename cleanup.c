@@ -5,36 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/26 18:07:28 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/29 13:38:32 by marvin           ###   ########.fr       */
+/*   Created: 2025/10/30 11:03:34 by marvin            #+#    #+#             */
+/*   Updated: 2025/10/30 17:27:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	clean_forks(t_rules *rules)
+void	destroy_and_free(t_rules *rules)
 {
 	int	i;
 
-	i = 0;
-	while (i < rules->philo_count)
+	if (rules->forks)
 	{
-		pthread_mutex_destroy(&rules->fork[i]);
-		i++;
+		i = 0;
+		while (i < rules->nb_philo)
+		{
+			pthread_mutex_destroy(&rules->forks[i]);
+			pthread_mutex_destroy(&rules->philos[i].meal_mutex);
+			i++;
+		}
+		pthread_mutex_destroy(&rules->print_mutex);
+		pthread_mutex_destroy(&rules->stop_mutex);
+		free(rules->forks);
+		rules->forks = NULL;
 	}
-	free(rules->fork);
-	rules->fork = NULL;
-}
-
-void	cleanup_all(t_philo *philo, t_rules *rules)
-{
-	clean_forks(rules);
-	pthread_mutex_destroy(&rules->print_lock);
-	pthread_mutex_destroy(&rules->meal_lock);
-	pthread_mutex_destroy(&rules->sim_lock);
-	pthread_mutex_destroy(&rules->meal_eaten_lock);
-	pthread_mutex_destroy(&rules->start_lock);
-	pthread_mutex_destroy(&rules->start_sim_lock);
-	free(philo);
-	free(rules);
+	if (rules->philos)
+	{
+		free(rules->philos);
+		rules->philos = NULL;
+	}
 }

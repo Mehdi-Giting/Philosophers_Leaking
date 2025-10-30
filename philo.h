@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:37:05 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/30 08:50:15 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 17:24:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,52 +21,50 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-typedef struct s_rules
-{
-	long long			philo_count;
-	long long			time_to_die;
-	long long			time_to_eat;
-	long long			time_to_sleep;
-	long long			must_eat_count;
-	long long			start_time;
-	bool				start_sim;
-	pthread_t			monitor;
-	pthread_mutex_t		start_sim_lock;
-	pthread_mutex_t		start_lock;
-	pthread_mutex_t		*fork;
-	pthread_mutex_t		print_lock;
-	pthread_mutex_t		meal_lock;
-	pthread_mutex_t		meal_eaten_lock;
-	pthread_mutex_t		sim_lock;
-	int					stop_sim;
-}	t_rules;
+typedef struct s_rules	t_rules;
 
 typedef struct s_philo
 {
 	int				id;
-	pthread_t		thread;
+	int				left_fork;
+	int				right_fork;
+	long			last_meal_ms;
 	int				meals_eaten;
-	long long		last_meal_time;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
+	pthread_t		thread;
+	pthread_mutex_t	meal_mutex;
 	t_rules			*rules;
 }	t_philo;
 
+typedef struct s_rules
+{
+	int				nb_philo;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				must_eat;
+	long			start_time_ms;
+	bool			stop;
+	pthread_mutex_t	stop_mutex;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
+	t_philo			*philos;
+}	t_rules;
+
+int			parse_args(int ac, char **av, t_rules *rules);
+void		destroy_and_free(t_rules *rules);
+int			rules_init(t_rules *rules);
+int			philos_init(t_rules *rules);
+int			one_philo(char **argv);
+int			start_simulation(t_rules *rules);
+void		*philo_routine(void *arg);
+void		*monitor_routine(void *arg);
+long		now_ms(void);
+void		ms_sleep(long ms);
+void		print_status(t_philo *p, const char *msg);
+bool		get_stop(t_rules *rules);
+void		set_stop(t_rules *rules, bool value);
 int			is_valid_input(int argc, char *argv[]);
 int			is_space(int c);
 long long	ft_atol(const char *str);
-t_rules		*init_rules(char **argv);
-t_philo		*init_philo(t_rules *rules);
-void		*routine(void *arg);
-void		thread_creation(t_philo *philo);
-void		thread_join(t_philo *philo);
-void		*thread_monitor(void *arg);
-long long	get_time_in_ms(void);
-void		sub_routine_thinking(t_philo *philo);
-void		sub_routine_eating(t_philo *philo);
-void		cleanup_all(t_philo *philo, t_rules *rules);
-void		sub_routine_sleeping(t_philo *philo);
-int			check_for_death(t_philo *philo);
-long long	get_time(t_philo *philo);
 
 #endif

@@ -6,40 +6,11 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 03:17:36 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/30 09:36:10 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 17:27:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	thread_creation(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->rules->philo_count)
-	{
-		pthread_create(&philo[i].thread, NULL, routine, &philo[i]);
-		i++;
-	}
-	// pthread_mutex_lock(&philo->rules->start_sim_lock);
-	// philo->rules->start_sim = true;
-	// pthread_mutex_unlock(&philo->rules->start_sim_lock);
-	pthread_create(&philo[i - 1].rules->monitor, NULL, thread_monitor, philo);
-}
-
-void	thread_join(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->rules->philo_count)
-	{
-		pthread_join(philo[i].thread, NULL);
-		i++;
-	}
-	pthread_join(philo[i - 1].rules->monitor, NULL);
-}
 
 int	is_space(int c)
 {
@@ -73,20 +44,27 @@ long long	ft_atol(const char *str)
 	return (res * sign);
 }
 
-long long	get_time_in_ms(void)
+int	parse_args(int ac, char **av, t_rules *rules)
 {
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	rules->nb_philo = (int)ft_atol(av[1]);
+	rules->time_to_die = ft_atol(av[2]);
+	rules->time_to_eat = ft_atol(av[3]);
+	rules->time_to_sleep = ft_atol(av[4]);
+	if (ac == 6)
+		rules->must_eat = (int)ft_atol(av[5]);
+	else
+		rules->must_eat = -1;
+	return (0);
 }
 
-long long	get_time(t_philo *philo)
+int	one_philo(char **argv)
 {
-	long long	time;
-
-	pthread_mutex_lock(&philo->rules->start_lock);
-	time = get_time_in_ms() - philo->rules->start_time;
-	pthread_mutex_unlock(&philo->rules->start_lock);
-	return (time);
+	if (ft_atol(argv[1]) == 1)
+	{
+		printf("%d 1 has taken a fork\n", 0);
+		usleep(ft_atol(argv[2]) * 1000);
+		printf("%lld 1 died\n", ft_atol(argv[2]));
+		return (1);
+	}
+	return (0);
 }

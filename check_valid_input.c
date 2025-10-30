@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:36:22 by marvin            #+#    #+#             */
-/*   Updated: 2025/10/25 06:13:56 by marvin           ###   ########.fr       */
+/*   Updated: 2025/10/30 11:17:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ int	is_valid_input(int argc, char **argv)
 	int	i;
 
 	if (argc < 5 || argc > 6)
-		return (0);
+		return (1);
 	i = 1;
 	while (argv[i])
 	{
 		if (ft_atol_check(argv[i]) == 0)
-			return (0);
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
